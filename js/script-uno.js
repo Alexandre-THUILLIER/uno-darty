@@ -133,7 +133,7 @@ function deleteUserList() {
 
         $('.list-gamer .content').html('');
         for (i = 0; i < players.length; ++i) {
-            $('.list-gamer .content').append('<div class="player"><button class="delete" data-key="' + i + '"></button><span>' + players[i] + '</span></div>')
+            $('.list-gamer .content').append('<div class="player"><button class="delete" data-key="' + i + '"><i class="icon-cancel-circled"></i></button><span>' + players[i] + '</span></div>')
         }
 
         // Suppression d'un user de la liste
