@@ -123,6 +123,7 @@ body {
             .user {
                 display: flex;
                 justify-content: space-between;
+                flex-wrap: wrap;
                 align-items: center;
                 border: 1px solid #dedddd;
                 padding: 9px;
@@ -149,6 +150,10 @@ body {
                         display: inline-block;
                         text-align: center;
                     }
+                }
+                .historique {
+                    width: 100%;
+                    font-size: 12px;
                 }
             }
         }

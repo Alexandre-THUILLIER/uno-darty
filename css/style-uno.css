@@ -89,6 +89,7 @@ body {
       body #main #begin-play .user {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
         align-items: center;
         border: 1px solid #dedddd;
         padding: 9px;
@@ -108,5 +109,8 @@ body {
           width: 35px;
           display: inline-block;
           text-align: center; }
+        body #main #begin-play .user .historique {
+          width: 100%;
+          font-size: 12px; }
 
 /*# sourceMappingURL=style-uno.css.map */

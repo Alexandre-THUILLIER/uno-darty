@@ -56,6 +56,11 @@ $(document).ready(function() {
 
             $('.user[data-score="'+s+'"] span').text(parseFloat(localStorage.getItem(localStorage.key(s))));
 
+            // Ajout de l'historique des points
+            var historique = $('.user[data-score="'+s+'"] .historique').text();
+            historique += ' / ' + newScore;
+            $('.user[data-score="'+s+'"] .historique').text(historique);
+
         }
         $('.user input').val('');
     });
@@ -75,7 +80,7 @@ $(document).ready(function() {
             $('#begin-play').show();
 
             for ( e = 0; e < localStorage.length; e++) {
-                $('#begin-play .content').append('<div class="user" data-score="'+ e +'"><div class="name">'+ localStorage.key(e) +'</div><div class="points"><input type="number" /><span>'+ localStorage.getItem(localStorage.key(e)) +'</span> pts</div></div>');
+                $('#begin-play .content').append('<div class="user" data-score="'+ e +'"><div class="name">'+ localStorage.key(e) +'</div><div class="points"><input type="number" /><span>'+ localStorage.getItem(localStorage.key(e)) +'</span> pts</div><div class="historique">0</div></div>');
             }
 
             $('.error').text('');
