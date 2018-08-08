@@ -14,7 +14,7 @@ $(document).ready(function() {
 
             $('.list-gamer .content').html('');
             for (i = 0; i < players.length; ++i) {
-                $('.list-gamer .content').append('<div class="player"><button class="delete" data-key="' + i + '"></button><span>' + players[i] + '</span></div>')
+                $('.list-gamer .content').append('<div class="player"><button class="delete" data-key="' + i + '"><i class="icon-cancel-circled"></i></button><span>' + players[i] + '</span></div>')
             }
             $('.error').text('');
             $(this).prev('input').val('');
@@ -36,33 +36,58 @@ $(document).ready(function() {
         localStorage.clear();
     });
 
-
     // Enregistrer les scores
     $('.enter-score').click(function(e) {
         e.preventDefault();
 
-        for ( s = 0; s < localStorage.length; s++) {
+        if ( $('#begin-play .content').hasClass('selected') ) {
 
-            if ( $('.user[data-score="'+s+'"] input').val() !== "" ) {
-                var newScore = parseFloat($('.user[data-score="'+s+'"] input').val()); // valeur du champ input
-            } else {
-                var newScore = 0;
+            for ( s = 0; s < localStorage.length; s++) {
+
+                if ( $('.user[data-score="'+s+'"] input[type="number"]').val() !== "" ) {
+                    var newScore = parseFloat($('.user[data-score="'+s+'"] input[type="number"]').val()); // valeur du champ input
+                } else {
+                    var newScore = 0;
+                }
+
+                var actuallyScore = parseFloat(localStorage.getItem(localStorage.key(s)));
+
+                var score = newScore + actuallyScore;
+                localStorage.setItem(localStorage.key(s), score);
+
+                $('.user[data-score="'+s+'"] .points span').text(parseFloat(localStorage.getItem(localStorage.key(s))));
+
+                // Ajout de l'historique des points
+                var historique = $('.user[data-score="'+s+'"] .historique').text();
+
+                if ( historique == "") {
+                    historique = newScore;
+                } else {
+                    historique += ' / ' + newScore;
+                }
+
+                $('.user[data-score="'+s+'"] .historique').text(historique);
+
+                // Ajout de marque au vainqueur
+                if ( $('.user[data-score="'+s+'"]').hasClass('the-winner') ) {
+                    $('.user[data-score="'+s+'"] .winner').append('<span></span>');
+                }
+
             }
 
-            var actuallyScore = parseFloat(localStorage.getItem(localStorage.key(s)));
+            // reset
+            $('.user input').val('');
+            $('.user .win input').prop('checked', false);
+            $('.user').removeClass('the-winner').parent('.content').removeClass('selected');
+            $('.error-winner').text('');
 
-            var score = newScore + actuallyScore;
-            localStorage.setItem(localStorage.key(s), score);
-
-            $('.user[data-score="'+s+'"] span').text(parseFloat(localStorage.getItem(localStorage.key(s))));
-
-            // Ajout de l'historique des points
-            var historique = $('.user[data-score="'+s+'"] .historique').text();
-            historique += ' / ' + newScore;
-            $('.user[data-score="'+s+'"] .historique').text(historique);
-
+        } else {
+            $('.error-winner').text('Veuillez sélectionner un vainqueur !');
         }
-        $('.user input').val('');
+
+
+
+
     });
 
 
@@ -80,7 +105,7 @@ $(document).ready(function() {
             $('#begin-play').show();
 
             for ( e = 0; e < localStorage.length; e++) {
-                $('#begin-play .content').append('<div class="user" data-score="'+ e +'"><div class="name">'+ localStorage.key(e) +'</div><div class="points"><input type="number" /><span>'+ localStorage.getItem(localStorage.key(e)) +'</span> pts</div><div class="historique">0</div></div>');
+                $('#begin-play .content').append('<div class="user" data-score="'+ e +'"><div class="win"><i class="icon-crown"></i></div><div class="name">'+ localStorage.key(e) +'<span class="winner"></span></div><div class="points"><input type="number" /><span>'+ localStorage.getItem(localStorage.key(e)) +'</span> pts</div><div class="historique"></div></div>');
             }
 
             $('.error').text('');
@@ -88,6 +113,12 @@ $(document).ready(function() {
         } else {
             $('.error').text('Veuillez ajouter des joueurs avant de lancer une nouvelle partie');
         }
+
+        // Ajout variable pour le vainqueur
+        $('.win').click(function() {
+            $('.win:not(this)').parents('.user').removeClass('the-winner');
+            $(this).parents('.user').addClass('the-winner').parents('.content').addClass('selected');
+        });
 
     });
 });

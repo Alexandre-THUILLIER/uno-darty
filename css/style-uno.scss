@@ -45,10 +45,13 @@ body {
     #main {
         padding: 20px;
 
-        .error {
+        .error, .error-winner {
             color: red;
             text-align: center;
             margin-top: 20px;
+        }
+        .error-winner {
+            margin-bottom: 20px;
         }
 
         .add-gamer {
@@ -72,18 +75,18 @@ body {
                     margin-bottom: 10px;
 
                     .delete {
-                        background: #ed1c24 url('../image/moins.png') no-repeat center;
                         border: none;
                         width: 30px;
                         height: 30px;
                         border-radius: 50%;
-                        color: white;
-                        font-size: 27px;
+                        font-size: 33px;
                         margin-right: 10px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         padding: 0;
+                        background: none;
+                        color: #ed1c24;
                     }
                 }
             }
@@ -120,40 +123,82 @@ body {
             box-sizing: border-box;
             overflow: auto;
 
-            .user {
-                display: flex;
-                justify-content: space-between;
-                flex-wrap: wrap;
-                align-items: center;
-                border: 1px solid #dedddd;
-                padding: 9px;
-                border-radius: 2px;
-                margin-bottom: 10px;
+            .content {
+                padding: 0 20px;
+                position: relative;
+                left: 20px;
 
-                .name {
-                    font-weight: bold;
-                }
-                .points {
+                .user {
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    border: 1px solid #dedddd;
+                    padding: 9px;
+                    border-radius: 2px;
+                    margin-bottom: 10px;
+                    position: relative;
 
-                    input {
-                        background: #f1f1f1;
-                        width: 40px;
-                        border: none;
-                        padding: 3px 4px 0px;
-                        margin-right: 10px;
+                    &.the-winner {
+
+                        .win {
+                            color: #ed1c24;
+                        }
                     }
 
-                    span {
-                        background: #f8da27;
-                        padding: 0 5px;
-                        width: 35px;
-                        display: inline-block;
-                        text-align: center;
+                    .win {
+                        position: absolute;
+                        top: 50%;
+                        left: -45px;
+                        transform: translateY(-50%);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #d6d6d6;
+                        font-size: 22px;
                     }
-                }
-                .historique {
-                    width: 100%;
-                    font-size: 12px;
+
+                    .name {
+                        font-weight: bold;
+
+                        .winner {
+
+                            margin-left: 5px;
+
+                            span {
+
+                                background: #ed1c24;
+                                width: 7px;
+                                height: 7px;
+                                display: inline-block;
+                                position: relative;
+                                border-radius: 50%;
+                                margin-left: 5px;
+                            }
+                        }
+                    }
+                    .points {
+
+                        input {
+                            background: #f1f1f1;
+                            width: 40px;
+                            border: none;
+                            padding: 3px 4px 0px;
+                            margin-right: 10px;
+                        }
+
+                        span {
+                            background: #f8da27;
+                            padding: 0 5px;
+                            width: 35px;
+                            display: inline-block;
+                            text-align: center;
+                        }
+                    }
+                    .historique {
+                        width: 100%;
+                        font-size: 12px;
+                    }
                 }
             }
         }

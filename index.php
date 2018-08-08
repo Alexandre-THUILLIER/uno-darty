@@ -8,6 +8,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/fontello.css">
     <link rel="stylesheet" href="css/style-uno.css">
 
     <!-- Scripts -->
@@ -42,6 +43,7 @@
         <div id="begin-play" style="display: none;">
             <div class="content"></div>
 
+            <div class="error-winner"></div>
             <button class="enter-score">Enregistrer les scores</button>
             <button class="new-game">Nouvelle partie</button>
         </div>
