@@ -1,8 +1,5 @@
 $(document).ready(function() {
 
-    // localStorage.clear();
-    // localStorage.setItem("Antoine", 50);
-
     players = [];
 
     // Ajout d'un user dans le tableau
@@ -21,7 +18,6 @@ $(document).ready(function() {
             }
             $('.error').text('');
             $(this).prev('input').val('');
-            console.log(players);
 
             // Suppression d'un user de la liste
             deleteUserList();
@@ -31,11 +27,6 @@ $(document).ready(function() {
             $(this).prev('input').val('');
 
         }
-
-        // localStorage.setItem(name, 0);
-        // if ( localStorage.getItem(name) ) {
-        //     $('.list-gamer .content').append('<div class="player" data-name="' + name + '"><button class="delete"></button><span>' + name + '</span></div>')
-        // }
     });
 
     // Nouvelle partie
@@ -46,7 +37,7 @@ $(document).ready(function() {
     });
 
 
-    // Enregistrer les scrores
+    // Enregistrer les scores
     $('.enter-score').click(function(e) {
         e.preventDefault();
 
@@ -83,11 +74,8 @@ $(document).ready(function() {
 
             $('#begin-play').show();
 
-            // debugger;
-
             for ( e = 0; e < localStorage.length; e++) {
                 $('#begin-play .content').append('<div class="user" data-score="'+ e +'"><div class="name">'+ localStorage.key(e) +'</div><div class="points"><input type="number" /><span>'+ localStorage.getItem(localStorage.key(e)) +'</span> pts</div></div>');
-                // debugger;
             }
 
             $('.error').text('');

@@ -1,13 +1,4 @@
-<?php
-
-    include 'dbConnection.php';
-
-//    $stmt = $pdo->prepare('SELECT * FROM annuaire WHERE etat = "published" ORDER BY date_added DESC');
-//    $stmt -> execute();
-//    $annuaires = $stmt->fetchAll();
-
-
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -49,13 +40,6 @@
         <button class="play">Lancer la partie</button>
 
         <div id="begin-play" style="display: none;">
-<!--            <div class="user">-->
-<!--                <div class="name">Adeline</div>-->
-<!--                <div class="points">-->
-<!--                    <input type="number" />-->
-<!--                    <span>158</span> pts-->
-<!--                </div>-->
-<!--            </div>-->
             <div class="content"></div>
 
             <button class="enter-score">Enregistrer les scores</button>
