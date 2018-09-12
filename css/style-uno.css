@@ -62,7 +62,7 @@ body {
         padding: 0;
         background: none;
         color: #ed1c24; }
-    body #main .play, body #main .new-game, body #main .enter-score {
+    body #main .play, body #main .new-game, body #main .enter-score, body #main .maj {
       background: #f8da28;
       color: white;
       border: none;
@@ -77,6 +77,13 @@ body {
       margin-bottom: -10px;
       width: 100%;
       margin-top: 0; }
+    body #main .new-game, body #main .maj {
+      left: initial;
+      transform: initial;
+      font-size: 15px;
+      margin-top: 20px; }
+    body #main .maj {
+      background: #9a9a9a; }
     body #main #begin-play {
       background: white;
       position: absolute;

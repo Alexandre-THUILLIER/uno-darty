@@ -91,7 +91,7 @@ body {
                 }
             }
         }
-        .play, .new-game, .enter-score {
+        .play, .new-game, .enter-score, .maj {
             background: #f8da28;
             color: white;
             border: none;
@@ -108,7 +108,15 @@ body {
             width: 100%;
             margin-top: 0;
         }
-
+        .new-game, .maj {
+            left: initial;
+            transform: initial;
+            font-size: 15px;
+            margin-top: 20px;
+        }
+        .maj {
+            background: #9a9a9a;
+        }
 
         // Popup début de partie
         #begin-play {

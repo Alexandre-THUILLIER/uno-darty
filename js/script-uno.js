@@ -1,6 +1,11 @@
 $(document).ready(function() {
 
-    players = [];
+    players = [
+        'Alexandre',
+        'Marine',
+        'Nicolas',
+        'Mehdi',
+        'Antoine'];
 
     // Ajout d'un user dans le tableau
     $('.add-gamer button').click(function(e) {
@@ -58,15 +63,15 @@ $(document).ready(function() {
                 $('.user[data-score="'+s+'"] .points span').text(parseFloat(localStorage.getItem(localStorage.key(s))));
 
                 // Ajout de l'historique des points
-                var historique = $('.user[data-score="'+s+'"] .historique').text();
+                var historique = $('.user[data-score="'+s+'"] .historique').html();
 
                 if ( historique == "") {
-                    historique = newScore;
+                    historique = '<span>' + newScore + '</span>';
                 } else {
-                    historique += ' / ' + newScore;
+                    historique += ' / <span>' + newScore + '</span>';
                 }
 
-                $('.user[data-score="'+s+'"] .historique').text(historique);
+                $('.user[data-score="'+s+'"] .historique').html(historique);
 
                 // Ajout de marque au vainqueur
                 if ( $('.user[data-score="'+s+'"]').hasClass('the-winner') ) {
@@ -74,7 +79,6 @@ $(document).ready(function() {
                 }
 
             }
-
             // reset
             $('.user input').val('');
             $('.user .win input').prop('checked', false);
@@ -84,12 +88,37 @@ $(document).ready(function() {
         } else {
             $('.error-winner').text('Veuillez sélectionner un vainqueur !');
         }
-
-
-
-
     });
 
+    // Mettre à jour la liste
+    $('.maj').click(function(e) {
+        e.preventDefault();
+
+        for ( f = 0; f < localStorage.length; f++) {
+
+            if ( $('.user[data-score="'+f+'"] input[type="number"]').val() !== "" ) {
+                var newScore = parseFloat($('.user[data-score="'+f+'"] input[type="number"]').val()); // valeur du champ input
+            } else {
+                var newScore = 0;
+            }
+
+            var actuallyScore = parseFloat(localStorage.getItem(localStorage.key(f)));
+            var score = newScore + actuallyScore;
+            localStorage.setItem(localStorage.key(f), score);
+
+            $('.user[data-score="'+f+'"] .points span').text(parseFloat(localStorage.getItem(localStorage.key(f))));
+
+            // Correction du dernier score en historique
+            $('.user[data-score="'+f+'"] .historique span:last-child').text(score);
+
+        }
+
+        // reset
+        $('.user input').val('');
+        $('.user .win input').prop('checked', false);
+        $('.user').removeClass('the-winner').parent('.content').removeClass('selected');
+
+    });
 
     // Lancer la partie
     $('.play').click(function(e) {
