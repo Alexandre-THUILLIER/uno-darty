@@ -1,11 +1,6 @@
 $(document).ready(function() {
 
-    players = [
-        'Alexandre',
-        'Marine',
-        'Nicolas',
-        'Mehdi',
-        'Antoine'];
+    players = [];
 
     // Ajout d'un user dans le tableau
     $('.add-gamer button').click(function(e) {
