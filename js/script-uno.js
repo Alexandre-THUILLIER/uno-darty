@@ -2,6 +2,8 @@ $(document).ready(function() {
 
     players = [];
 
+    userInfo = [];
+
     // Ajout d'un user dans le tableau
     $('.add-gamer button').click(function(e) {
 
@@ -36,6 +38,8 @@ $(document).ready(function() {
         localStorage.clear();
     });
 
+    updateOrder();
+
     // Enregistrer les scores
     $('.enter-score').click(function(e) {
         e.preventDefault();
@@ -44,36 +48,40 @@ $(document).ready(function() {
 
             for ( s = 0; s < localStorage.length; s++) {
 
-                if ( $('.user[data-score="'+s+'"] input[type="number"]').val() !== "" ) {
-                    var newScore = parseFloat($('.user[data-score="'+s+'"] input[type="number"]').val()); // valeur du champ input
+                if ( $('.user[data-user="'+s+'"] input[type="number"]').val() !== "" ) {
+                    var newScore = parseFloat($('.user[data-user="'+s+'"] input[type="number"]').val()); // valeur du champ input
+                } else if ( $('.user[data-user="'+s+'"]').hasClass('the-winner') ) {
+                    var newScore = -20;
                 } else {
                     var newScore = 0;
                 }
 
                 var actuallyScore = parseFloat(localStorage.getItem(localStorage.key(s)));
 
+                // SCORE FINAL
                 var score = newScore + actuallyScore;
+
                 localStorage.setItem(localStorage.key(s), score);
 
-                $('.user[data-score="'+s+'"] .points span').text(parseFloat(localStorage.getItem(localStorage.key(s))));
+                $('.user[data-user="'+s+'"] .points span').text(parseFloat(localStorage.getItem(localStorage.key(s))));
+                $('.user[data-user="'+s+'"]').attr('data-score', score);
+
+                // Ajout de marque au vainqueur
+                if ( $('.user[data-user="'+s+'"]').hasClass('the-winner') ) {
+                    $('.user[data-user="'+s+'"] .winner').append('<span></span>');
+                }
 
                 // Ajout de l'historique des points
-                var historique = $('.user[data-score="'+s+'"] .historique').html();
-
+                var historique = $('.user[data-user="'+s+'"] .historique').html();
                 if ( historique == "") {
                     historique = '<span>' + newScore + '</span>';
                 } else {
                     historique += ' / <span>' + newScore + '</span>';
                 }
-
-                $('.user[data-score="'+s+'"] .historique').html(historique);
-
-                // Ajout de marque au vainqueur
-                if ( $('.user[data-score="'+s+'"]').hasClass('the-winner') ) {
-                    $('.user[data-score="'+s+'"] .winner').append('<span></span>');
-                }
+                $('.user[data-user="'+s+'"] .historique').html(historique);
 
             }
+
             // reset
             $('.user input').val('');
             $('.user .win input').prop('checked', false);
@@ -91,8 +99,8 @@ $(document).ready(function() {
 
         for ( f = 0; f < localStorage.length; f++) {
 
-            if ( $('.user[data-score="'+f+'"] input[type="number"]').val() !== "" ) {
-                var newScore = parseFloat($('.user[data-score="'+f+'"] input[type="number"]').val()); // valeur du champ input
+            if ( $('.user[data-user="'+f+'"] input[type="number"]').val() !== "" ) {
+                var newScore = parseFloat($('.user[data-user="'+f+'"] input[type="number"]').val()); // valeur du champ input
             } else {
                 var newScore = 0;
             }
@@ -101,17 +109,23 @@ $(document).ready(function() {
             var score = newScore + actuallyScore;
             localStorage.setItem(localStorage.key(f), score);
 
-            $('.user[data-score="'+f+'"] .points span').text(parseFloat(localStorage.getItem(localStorage.key(f))));
+            $('.user[data-user="'+f+'"] .points span').text(parseFloat(localStorage.getItem(localStorage.key(f))));
 
             // Correction du dernier score en historique
-            $('.user[data-score="'+f+'"] .historique span:last-child').text(score);
+            $('.user[data-user="'+f+'"] .historique span:last-child').text(score);
 
         }
-
+        
         // reset
         $('.user input').val('');
         $('.user .win input').prop('checked', false);
         $('.user').removeClass('the-winner').parent('.content').removeClass('selected');
+
+    });
+
+    $('.sortBy .cross-close').click(function() {
+        $('.sortBy').hide();
+        $('.sortBy .content .sort-user').remove();
 
     });
 
@@ -129,7 +143,10 @@ $(document).ready(function() {
             $('#begin-play').show();
 
             for ( e = 0; e < localStorage.length; e++) {
-                $('#begin-play .content').append('<div class="user" data-score="'+ e +'"><div class="win"><i class="icon-crown"></i></div><div class="name">'+ localStorage.key(e) +'<span class="winner"></span></div><div class="points"><input type="number" /><span>'+ localStorage.getItem(localStorage.key(e)) +'</span> pts</div><div class="historique"></div></div>');
+
+                var keyName = localStorage.key(e);
+
+                $('#begin-play > .content').append('<div class="user" data-user="'+ e +'" data-score="0" data-name="'+ keyName +'"><div class="win"><i class="icon-crown"></i></div><div class="name">'+ localStorage.key(e) +'<span class="winner"></span></div><div class="points"><input type="number" /><span>'+ localStorage.getItem(localStorage.key(e)) +'</span> pts</div><div class="historique"></div></div>');
             }
 
             $('.error').text('');
@@ -146,6 +163,7 @@ $(document).ready(function() {
 
     });
 });
+
 function deleteUserList() {
 
     $('.delete').on('click', function(e) {
@@ -165,4 +183,21 @@ function deleteUserList() {
 
         console.log(players);
     });
+}
+
+function updateOrder() {
+
+    $('.sort').click(function() {
+
+        $('.sortBy').show();
+        divList = $(".user");
+        divList.sort(function (a, b) {
+            return  $(a).attr('data-score') - $(b).attr('data-score');
+        });
+        for (i = 0; i < localStorage.length; i++) {
+            $('<div class="sort-user"><div class="sort-classement">' + (i+1) + '<span>e</span></div><div class="sort-pseudo">' + divList.eq(i).attr('data-name') + '</div><div class="sort-score">' + divList.eq(i).attr('data-score') + ' points</div></div>').appendTo(".sortBy .content");
+        }
+
+    });
+
 }
