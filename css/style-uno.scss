@@ -185,7 +185,7 @@ body {
           border-radius: 0;
 
           &#firstname {
-            width: 50%;
+            width: 73%;
           }
           &#score {
             width: 20%;
@@ -213,6 +213,16 @@ body {
       padding: 20px;
       box-sizing: border-box;
       overflow: auto;
+
+      h4 {
+        margin-top: 0;
+        text-align: center;
+        font-weight: 100;
+
+        span {
+          font-weight: bold;
+        }
+      }
 
       .sortBy {
         background: #f1f1f1;
@@ -297,6 +307,17 @@ body {
             justify-content: center;
             color: #d6d6d6;
             font-size: 22px;
+
+            input {
+              appearance: none;
+              -webkit-appearance: none;
+              background-color: transparent;
+              border: none;
+              width: 25px;
+              height: 27px;
+              position: absolute;
+              margin: 0;
+            }
           }
 
           .name {
