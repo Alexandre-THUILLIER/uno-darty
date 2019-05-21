@@ -134,7 +134,7 @@ body {
           font-size: 16px;
           border-radius: 0; }
           body #main .all-button .new_playeurs_to_added input#firstname {
-            width: 50%; }
+            width: 73%; }
           body #main .all-button .new_playeurs_to_added input#score {
             width: 20%; }
         body #main .all-button .new_playeurs_to_added button {
@@ -153,6 +153,12 @@ body {
       padding: 20px;
       box-sizing: border-box;
       overflow: auto; }
+      body #main #begin-play h4 {
+        margin-top: 0;
+        text-align: center;
+        font-weight: 100; }
+        body #main #begin-play h4 span {
+          font-weight: bold; }
       body #main #begin-play .sortBy {
         background: #f1f1f1;
         position: fixed;

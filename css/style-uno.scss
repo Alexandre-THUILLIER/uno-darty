@@ -185,7 +185,7 @@ body {
           border-radius: 0;
 
           &#firstname {
-            width: 50%;
+            width: 73%;
           }
           &#score {
             width: 20%;
@@ -213,6 +213,16 @@ body {
       padding: 20px;
       box-sizing: border-box;
       overflow: auto;
+
+      h4 {
+        margin-top: 0;
+        text-align: center;
+        font-weight: 100;
+
+        span {
+          font-weight: bold;
+        }
+      }
 
       .sortBy {
         background: #f1f1f1;
