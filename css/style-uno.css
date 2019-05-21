@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: 'calibri', 'Arial', 'SansSerif'; }
@@ -84,20 +87,62 @@ body {
       margin-top: 0; }
     body #main .all-button {
       display: flex;
-      flex-wrap: wrap;
-      flex-direction: column;
-      padding: 0 60px; }
-      body #main .all-button > button {
+      justify-content: space-between;
+      flex-wrap: wrap; }
+      body #main .all-button .see_all_options {
+        width: 100%;
+        background: #f1f1f1;
+        border: 1px solid #d6d6d6;
         margin-top: 20px;
-        background: #f8da28;
-        color: white;
-        border: none;
-        padding: 10px 30px;
-        font-size: 18px; }
-        body #main .all-button > button.sort {
-          background: #464646; }
-        body #main .all-button > button.maj {
-          background: #9a9a9a; }
+        text-align: center;
+        padding: 10px; }
+      body #main .all-button .all_options {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        background: #f1f1f1;
+        border: 1px solid #d6d6d6;
+        padding: 10px;
+        border-top: none; }
+        body #main .all-button .all_options button {
+          background: #f8da28;
+          color: white;
+          border: none;
+          padding: 10px 4px;
+          font-size: 18px;
+          width: 48%;
+          margin-bottom: 10px; }
+          body #main .all-button .all_options button:nth-child(3), body #main .all-button .all_options button:nth-child(4) {
+            margin-bottom: 0; }
+          body #main .all-button .all_options button.sort {
+            background: #464646; }
+          body #main .all-button .all_options button.maj {
+            background: #9a9a9a; }
+          body #main .all-button .all_options button.add_playeur {
+            background: #ec7303; }
+      body #main .all-button .new_playeurs_to_added {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        background: #f1f1f1;
+        border: 1px solid #d6d6d6;
+        padding: 10px;
+        border-top: none; }
+        body #main .all-button .new_playeurs_to_added input {
+          font-size: 16px;
+          border-radius: 0; }
+          body #main .all-button .new_playeurs_to_added input#firstname {
+            width: 50%; }
+          body #main .all-button .new_playeurs_to_added input#score {
+            width: 20%; }
+        body #main .all-button .new_playeurs_to_added button {
+          width: 23%;
+          background: #ed1c24;
+          border: none;
+          color: white;
+          font-size: 16px; }
     body #main #begin-play {
       background: white;
       position: fixed;

@@ -51,9 +51,19 @@
             <div class="error-winner"></div>
             <button class="enter-score">Enregistrer les scores</button>
             <div class="all-button">
-                <button class="sort">Trier</button>
-                <button class="maj">Mettre à jour</button>
-                <button class="new-game">Nouvelle partie</button>
+                <div class="see_all_options">Afficher toutes les options</div>
+                <div class="all_options" style="display: none;">
+                    <button class="sort">Trier</button>
+                    <button class="maj">Mettre à jour</button>
+                    <button class="new-game">Nouvelle partie</button>
+                    <button class="add_playeur">Ajouter un joueur</button>
+                </div>
+                <div class="new_playeurs_to_added" style="display: none;">
+                    <input type="text" placeholder="Prénom" id="firstname">
+                    <input type="tel" placeholder="Score" id="score">
+                    <button id="btn_add_new_playeur">Ajouter</button>
+                    Attention, la fonction "Ajouter un joueur" ne fonctionne pas encore très bien
+                </div>
             </div>
 
         </div>

@@ -4,11 +4,13 @@ $(document).ready(function() {
 
     userInfo = [];
 
+    updateOrder();
+
     // Ajout d'un user dans le tableau
     $('.add-gamer button').click(function(e) {
 
         e.preventDefault();
-        let name = $(this).prev('input').val();
+        const name = $(this).prev('input').val();
 
         if ( name != '' ) {
 
@@ -31,39 +33,30 @@ $(document).ready(function() {
         }
     });
 
-    // Nouvelle partie
-    $('.new-game').click(function(e) {
-        e.preventDefault();
-        $('#begin-play').hide().find('.content').html('');
-        localStorage.clear();
-    });
-
-    updateOrder();
-
     // Enregistrer les scores
-    $('.enter-score').click(function(e) {
+    $(document).on('click', '.enter-score', function(e) {
         e.preventDefault();
 
         if ( $('#begin-play .content').hasClass('selected') ) {
 
-            for ( s = 0; s < localStorage.length; s++) {
+            for ( s = 0; s < sessionStorage.length; s++) {
 
-                if ( $('.user[data-user="'+s+'"] input[type="number"]').val() !== "" ) {
-                    var newScore = parseFloat($('.user[data-user="'+s+'"] input[type="number"]').val()); // valeur du champ input
+                if ( $('.user[data-user="'+s+'"] input[type="tel"]').val() !== "" ) {
+                    var newScore = parseFloat($('.user[data-user="'+s+'"] input[type="tel"]').val()); // valeur du champ input
                 } else if ( $('.user[data-user="'+s+'"]').hasClass('the-winner') ) {
                     var newScore = -20;
                 } else {
                     var newScore = 0;
                 }
 
-                var actuallyScore = parseFloat(localStorage.getItem(localStorage.key(s)));
+                var actuallyScore = parseFloat(sessionStorage.getItem(sessionStorage.key(s)));
 
                 // SCORE FINAL
                 var score = newScore + actuallyScore;
 
-                localStorage.setItem(localStorage.key(s), score);
+                sessionStorage.setItem(sessionStorage.key(s), score);
 
-                $('.user[data-user="'+s+'"] .points span').text(parseFloat(localStorage.getItem(localStorage.key(s))));
+                $('.user[data-user="'+s+'"] .points span').text(parseFloat(sessionStorage.getItem(sessionStorage.key(s))));
                 $('.user[data-user="'+s+'"]').attr('data-score', score);
 
                 // Ajout de marque au vainqueur
@@ -97,25 +90,25 @@ $(document).ready(function() {
     $('.maj').click(function(e) {
         e.preventDefault();
 
-        for ( f = 0; f < localStorage.length; f++) {
+        for ( f = 0; f < sessionStorage.length; f++) {
 
-            if ( $('.user[data-user="'+f+'"] input[type="number"]').val() !== "" ) {
-                var newScore = parseFloat($('.user[data-user="'+f+'"] input[type="number"]').val()); // valeur du champ input
+            if ( $('.user[data-user="'+f+'"] input[type="tel"]').val() !== "" ) {
+                var newScore = parseFloat($('.user[data-user="'+f+'"] input[type="tel"]').val()); // valeur du champ input
             } else {
                 var newScore = 0;
             }
 
-            var actuallyScore = parseFloat(localStorage.getItem(localStorage.key(f)));
+            var actuallyScore = parseFloat(sessionStorage.getItem(sessionStorage.key(f)));
             var score = newScore + actuallyScore;
-            localStorage.setItem(localStorage.key(f), score);
+            sessionStorage.setItem(sessionStorage.key(f), score);
 
-            $('.user[data-user="'+f+'"] .points span').text(parseFloat(localStorage.getItem(localStorage.key(f))));
+            $('.user[data-user="'+f+'"] .points span').text(parseFloat(sessionStorage.getItem(sessionStorage.key(f))));
 
             // Correction du dernier score en historique
             $('.user[data-user="'+f+'"] .historique span:last-child').text(score);
 
         }
-        
+
         // reset
         $('.user input').val('');
         $('.user .win input').prop('checked', false);
@@ -123,30 +116,38 @@ $(document).ready(function() {
 
     });
 
+    // Nouvelle partie
+    $('.new-game').click(function(e) {
+        e.preventDefault();
+        $('#begin-play').hide().find('.content').html('');
+    });
+
     $('.sortBy .cross-close').click(function() {
         $('.sortBy').hide();
         $('.sortBy .content .sort-user').remove();
-
     });
 
     // Lancer la partie
     $('.play').click(function(e) {
         e.preventDefault();
 
-        localStorage.clear();
+        sessionStorage.clear();
+
+        localStorage.setItem('nb_playeurs', players.length);
+
         $.each(players, function(index, value) {
-            localStorage.setItem(value, 0);
+            sessionStorage.setItem(value, 0);
         });
 
         if ( $('.list-gamer .content').html() !== "" ) {
 
             $('#begin-play').show();
 
-            for ( e = 0; e < localStorage.length; e++) {
+            for ( e = 0; e < sessionStorage.length; e++) {
 
-                var keyName = localStorage.key(e);
+                var keyName = sessionStorage.key(e);
 
-                $('#begin-play > .content').append('<div class="user" data-user="'+ e +'" data-score="0" data-name="'+ keyName +'"><div class="win"><i class="icon-crown"></i></div><div class="name">'+ localStorage.key(e) +'<span class="winner"></span></div><div class="points"><input type="number" /><span>'+ localStorage.getItem(localStorage.key(e)) +'</span> pts</div><div class="historique"></div></div>');
+                $('#begin-play > .content').append('<div class="user" data-user="'+ e +'" data-score="0" data-name="'+ keyName +'"><div class="win"><i class="icon-crown"></i></div><div class="name">'+ sessionStorage.key(e) +'<span class="winner"></span></div><div class="points"><input type="tel" /><span>'+ sessionStorage.getItem(sessionStorage.key(e)) +'</span> pts</div><div class="historique"></div></div>');
             }
 
             $('.error').text('');
@@ -156,12 +157,24 @@ $(document).ready(function() {
         }
 
         // Ajout variable pour le vainqueur
-        $('.win').click(function() {
+        $('.win').on('click', function() {
             $('.win:not(this)').parents('.user').removeClass('the-winner');
             $(this).parents('.user').addClass('the-winner').parents('.content').addClass('selected');
         });
 
     });
+
+    // Afficher toutes les options
+    $('.see_all_options').click(function() {
+        $(this).next('.all_options').slideToggle();
+        $('.new_playeurs_to_added').slideUp();
+    });
+
+    $('.add_playeur').on('click', function () {
+        $('.new_playeurs_to_added').slideToggle();
+    });
+
+    addNewPlayeurInGame()
 });
 
 function deleteUserList() {
@@ -194,10 +207,35 @@ function updateOrder() {
         divList.sort(function (a, b) {
             return  $(a).attr('data-score') - $(b).attr('data-score');
         });
-        for (i = 0; i < localStorage.length; i++) {
+        for (i = 0; i < sessionStorage.length; i++) {
             $('<div class="sort-user"><div class="sort-classement">' + (i+1) + '<span>e</span></div><div class="sort-pseudo">' + divList.eq(i).attr('data-name') + '</div><div class="sort-score">' + divList.eq(i).attr('data-score') + ' points</div></div>').appendTo(".sortBy .content");
         }
 
     });
 
+}
+
+function addNewPlayeurInGame() {
+    $(document).on('click', '#btn_add_new_playeur', function() {
+
+        const nbPlayeur = parseInt(localStorage.getItem('nb_playeurs'));
+
+        const namePlayeur = $('.new_playeurs_to_added input#firstname').val();
+        const scorePlayeur = $('.new_playeurs_to_added input#score').val();
+
+        localStorage.setItem('nb_playeurs', nbPlayeur + 1);
+        sessionStorage.setItem(namePlayeur, scorePlayeur);
+
+        $('#begin-play > .content').append('<div class="user" data-user="'+ nbPlayeur +'" data-score="' + scorePlayeur + '" data-name="'+ namePlayeur +'"><div class="win"><i class="icon-crown"></i></div><div class="name">'+ namePlayeur +'<span class="winner"></span></div><div class="points"><input type="tel" /><span>'+ scorePlayeur +'</span> pts</div><div class="historique"><span>' + scorePlayeur + '</span></div></div>');
+
+        $('.new_playeurs_to_added input#firstname').val('');
+        $('.new_playeurs_to_added input#score').val('');
+
+        // Ajout variable pour le vainqueur
+        $('.win').on('click', function() {
+            $('.win:not(this)').parents('.user').removeClass('the-winner');
+            $(this).parents('.user').addClass('the-winner').parents('.content').addClass('selected');
+        });
+
+    });
 }
